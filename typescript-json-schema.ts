@@ -321,6 +321,7 @@ const validationKeywords = {
     examples: true,                    // Draft 6 (draft-handrews-json-schema-validation-01)
 
     ignore: true,
+    optional: true,
     description: true,
     format: true,
     default: true,
@@ -913,7 +914,7 @@ export class JsonSchemaGenerator {
                 const requiredProps = props.reduce((required: string[], prop: ts.Symbol) => {
                     const def = {};
                     this.parseCommentsIntoDefinition(prop, def, {});
-                    if (!(prop.flags & ts.SymbolFlags.Optional) && !(prop.flags & ts.SymbolFlags.Method) && !(<any>prop).mayBeUndefined && !def.hasOwnProperty("ignore")) {
+                    if (!(prop.flags & ts.SymbolFlags.Optional) && !(prop.flags & ts.SymbolFlags.Method) && !(<any>prop).mayBeUndefined && !def.hasOwnProperty("ignore") && !def.hasOwnProperty("optional")) {
                         required.push(prop.getName());
                     }
                     return required;
