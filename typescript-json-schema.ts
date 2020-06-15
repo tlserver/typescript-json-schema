@@ -69,9 +69,9 @@ export type PartialArgs = Partial<Args>;
 
 export type PrimitiveType = number | boolean | string | null;
 
-type RedifinedFields = "type" | "items" | "additionalItems" | "contains" | "properties" | "patternProperties" | "additionalProperties" | "dependencies" | "propertyNames" | "if" | "then" | "else" | "allOf" | "anyOf" | "oneOf" | "not" | "definitions";
+type RedefinedFields = "type" | "items" | "additionalItems" | "contains" | "properties" | "patternProperties" | "additionalProperties" | "dependencies" | "propertyNames" | "if" | "then" | "else" | "allOf" | "anyOf" | "oneOf" | "not" | "definitions";
 export type DefinitionOrBoolean = Definition | boolean;
-export interface Definition extends Omit<JSONSchema7, RedifinedFields> {
+export interface Definition extends Omit<JSONSchema7, RedefinedFields> {
     // The type field here is incompatible with the standard definition
     type?: string | string[];
 
@@ -80,7 +80,7 @@ export interface Definition extends Omit<JSONSchema7, RedifinedFields> {
     defaultProperties?: string[];
     typeof?: "function";
 
-    // Fields that must be redifined because they make use of this definition itself
+    // Fields that must be redefined because they make use of this definition itself
     items?: DefinitionOrBoolean | DefinitionOrBoolean[];
     additionalItems?: DefinitionOrBoolean;
     contains?: JSONSchema7;
@@ -360,7 +360,7 @@ export class JsonSchemaGenerator {
 
     /**
      * This map holds references to all reffed definition., including schema
-     * overrides and generateddefinitions.
+     * overrides and generated definitions.
      */
     private reffedDefinitions: { [key: string]: Definition } = {};
 
@@ -650,7 +650,7 @@ export class JsonSchemaGenerator {
                     if ((<any>initial).expression) { // node
                         const exp = (<any>initial).expression;
                         const text = (<any>exp).text;
-                        // if it is an expression with a text literal, chances are it is the enum convension:
+                        // if it is an expression with a text literal, chances are it is the enum convention:
                         // CASELABEL = 'literal' as any
                         if (text) {
                             enumValues.push(text);
@@ -1210,7 +1210,7 @@ export function buildGenerator(program: ts.Program, args: PartialArgs = {}, only
         }
         return onlyIncludeFiles.indexOf(file.fileName) >= 0;
     }
-    // Use defaults unles otherwise specified
+    // Use defaults unless otherwise specified
     const settings = getDefaultArgs();
 
     for (const pref in args) {
